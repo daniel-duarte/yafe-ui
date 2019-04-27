@@ -1,0 +1,20 @@
+{
+  "name": "yafe-ui",
+  "version": "0.1.0",
+  "description": "Yafe GUI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yafe",
+    "flow",
+    "engine",
+    "gui",
+    "ui",
+    "interface",
+    "graph"
+  ],
+  "author": "Daniel Duarte <danieldd.ar@gmail.com>",
+  "license": "MIT"
+}
