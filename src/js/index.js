@@ -22,7 +22,7 @@ var VueNumControl = {
   mounted() {
     this.value = this.getData(this.ikey);
   }
-}
+};
 
 class NumControl extends Rete.Control {
 
@@ -46,7 +46,9 @@ class NumComponent extends Rete.Component {
     builder(node) {
         var out1 = new Rete.Output('num', "Number", numSocket);
 
-        return node.addControl(new NumControl(this.editor, 'num')).addOutput(out1);
+        return node
+            .addControl(new NumControl(this.editor, 'num'))
+            .addOutput(out1);
     }
 
     worker(node, inputs, outputs) {
@@ -84,5 +86,42 @@ class AddComponent extends Rete.Component {
     }
 }
 
+class SqrComponent extends Rete.Component {
+    constructor(){
+        super("sqr");
+    }
+
+    builder(node) {
+        return node
+            .addInput(new Rete.Input('x', "x", numSocket))
+            .addOutput(new Rete.Output('result', "result", numSocket));
+    }
+}
+
+class SqrtComponent extends Rete.Component {
+    constructor(){
+        super("sqrt");
+    }
+
+    builder(node) {
+        return node
+            .addInput(new Rete.Input('x', "x", numSocket))
+            .addOutput(new Rete.Output('result', "result", numSocket));
+    }
+}
+
+class SumComponent extends Rete.Component {
+    constructor(){
+        super("sum");
+    }
+
+    builder(node) {
+        return node
+            .addInput(new Rete.Input('x', "x", numSocket))
+            .addInput(new Rete.Input('y', "y", numSocket))
+            .addOutput(new Rete.Output('result', "result", numSocket));
+    }
+}
+
+
 loadFlow();
-console.log(yafeToReteFlowSpec(yafeFlowSpec, reteFlowSpec));

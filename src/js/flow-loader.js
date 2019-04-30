@@ -39,7 +39,7 @@ const yafeFlowSpec = {
     },
 };
 
-const reteFlowSpec = {
+let reteFlowSpec = {
     "id": "retejs@0.1.0",
     "nodes": {
         "t2": {
@@ -220,7 +220,10 @@ async function loadFlow() {
 
     const components = [
         new NumComponent(),
-        new AddComponent()
+        new AddComponent(),
+        new SqrComponent(),
+        new SqrtComponent(),
+        new SumComponent(),
     ];
 
     const container = document.querySelector('#rete');
@@ -256,6 +259,8 @@ async function loadFlow() {
     // editor.connect(n2.outputs.get('num'), add1.inputs.get('num2'));
     // editor.connect(add1.outputs.get('num'), add2.inputs.get('num1'));
     // editor.connect(n3.outputs.get('num'), add2.inputs.get('num2'));
+
+    reteFlowSpec = yafeToReteFlowSpec(yafeFlowSpec, reteFlowSpec);
 
     editor.fromJSON(reteFlowSpec).then(() => {
         editor.view.resize();
