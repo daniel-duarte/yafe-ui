@@ -26,7 +26,7 @@ function yafeToElkFlowSpec(yafeFlowSpec) {
     }
 
     let edgeNum = 0;
-    const edgesByReq = calculateEdgesByReq(yafeFlowSpec);
+    const edgesByReq = Flow.calculateEdgesByReq(yafeFlowSpec);
     for (const reqName in edgesByReq) if (edgesByReq.hasOwnProperty(reqName)) {
         const edges = edgesByReq[reqName];
 

@@ -3,16 +3,3 @@ html, body {
   width: 100%;
   margin: 0;
 }
-
-.node .control input, .node .input-control input {
-  width: 140px;
-}
-
-select, input {
-  border-radius: 30px;
-  background-color: white;
-  padding: 2px 6px;
-  border: 1px solid #999;
-  font-size: 110%;
-  width: 170px;
-}

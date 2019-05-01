@@ -1,6 +1,3 @@
-var numSocket = new Rete.Socket('Number value');
-
-
 const yafeFlowSpec = {
     tasks: {
         sqr1: {
@@ -42,105 +39,33 @@ const yafeFlowSpec = {
     },
 };
 
-let reteFlowSpec = {
-    "id": "retejs@0.1.0",
-    "nodes": {
-        "t2": {
-            "id": 2,
-            "data": {
-                "num": 2
-            },
-            "inputs": {},
-            "outputs": {
-                "num": {
-                    "connections": [{
-                        "node": "t6",
-                        "input": "num1",
-                        "data": {}
-                    }]
-                }
-            },
-            "position": [0, 0],
-            "name": "Number"
-        },
-        "t4": {
-            "id": 4,
-            "data": {
-                "num": 0
-            },
-            "inputs": {},
-            "outputs": {
-                "num": {
-                    "connections": [{
-                        "node": "t6",
-                        "input": "num2",
-                        "data": {}
-                    }]
-                }
-            },
-            "position": [0, 200],
-            "name": "Number"
-        },
-        "t6": {
-            "id": 6,
-            "data": {
-                "preview": 0,
-                "num1": 0,
-                "num2": 0
-            },
-            "inputs": {
-                "num1": {
-                    "connections": [{
-                        "node": "t2",
-                        "output": "num",
-                        "data": {}
-                    }]
-                },
-                "num2": {
-                    "connections": [{
-                        "node": "t4",
-                        "output": "num",
-                        "data": {}
-                    }]
-                }
-            },
-            "outputs": {
-                "num": {
-                    "connections": []
-                }
-            },
-            "position": [300, 0],
-            "name": "Add"
-        }
-    }
-};
 
 const elkFlow = yafeToElkFlowSpec(yafeFlowSpec);
 
 const elk = new ELK();
 
 
+function getComponentNames(yafeFlowSpec) {
+    const names = [];
+    const comps = Object.keys(yafeFlowSpec.tasks).map(taskName => (
+        names.indexOf(yafeFlowSpec.tasks[taskName].resolver.name) === -1 ? (
+            names.push(yafeFlowSpec.tasks[taskName].resolver.name), {
+                name: yafeFlowSpec.tasks[taskName].resolver.name,
+                inputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.params),
+                outputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.results),
+            }
+        ) : null
+    ));
 
-const names = [];
-let comps = Object.keys(yafeFlowSpec.tasks).map(taskName => (
-    names.indexOf(yafeFlowSpec.tasks[taskName].resolver.name) === -1 ? (
-        names.push(yafeFlowSpec.tasks[taskName].resolver.name),
-        {
-            name: yafeFlowSpec.tasks[taskName].resolver.name,
-            inputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.params),
-            outputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.results),
-        }
-    ): null
-));
-comps = comps.filter(comp => comp !== null);
-
+    return comps.filter(comp => comp !== null);
+}
 
 elk.layout(elkFlow)
     .then(function () {
 
-        const reteFlow = yafeToReteFlowSpec(yafeFlowSpec, reteFlowSpec);
+        const reteFlow = Flow.yafeToReteFlowSpec(yafeFlowSpec);
 
         applyPosition(reteFlow, elkFlow);
-        renderFlow('rete', reteFlow, comps);
+        Flow.renderFlow('rete', reteFlow, getComponentNames(yafeFlowSpec));
     })
     .catch(console.error);
