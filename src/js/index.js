@@ -119,17 +119,28 @@ const elkFlow = yafeToElkFlowSpec(yafeFlowSpec);
 
 const elk = new ELK();
 
+
+
+const names = [];
+let comps = Object.keys(yafeFlowSpec.tasks).map(taskName => (
+    names.indexOf(yafeFlowSpec.tasks[taskName].resolver.name) === -1 ? (
+        names.push(yafeFlowSpec.tasks[taskName].resolver.name),
+        {
+            name: yafeFlowSpec.tasks[taskName].resolver.name,
+            inputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.params),
+            outputs: Object.keys(yafeFlowSpec.tasks[taskName].resolver.results),
+        }
+    ): null
+));
+comps = comps.filter(comp => comp !== null);
+
+
 elk.layout(elkFlow)
     .then(function () {
 
-        console.log(elkFlow);
-
-        const reteFlow = loadFlow();
+        const reteFlow = yafeToReteFlowSpec(yafeFlowSpec, reteFlowSpec);
 
         applyPosition(reteFlow, elkFlow);
-        console.log(reteFlow);
-
-        renderFlow(reteFlow);
-
+        renderFlow('rete', reteFlow, comps);
     })
     .catch(console.error);

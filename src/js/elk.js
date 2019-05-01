@@ -4,7 +4,6 @@ function addEdgesElk(resultSpec, inputEdges, outputEdges, edgeNum) {
         for (let j = 0; j < outputEdges.length; j++) {
             const edgeOutSide = outputEdges[j];
 
-             console.log(edgeOutSide, '->', edgeInSide);
             resultSpec.edges.push({
                 id: "e" + edgeNum,
                 sources: [ edgeOutSide.task ],
