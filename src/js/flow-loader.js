@@ -1,5 +1,3 @@
-
-
 function convertTask(taskCode, taskSpec, taskId) {
 
     const inputs = {};
@@ -118,8 +116,6 @@ function loadFlow() {
 async function renderFlow(reteFlowSpec) {
 
     const components = [
-        new NumComponent(),
-        new AddComponent(),
         new SqrComponent(),
         new SqrtComponent(),
         new SumComponent(),
@@ -134,35 +130,8 @@ async function renderFlow(reteFlowSpec) {
 
     components.map(c => editor.register(c));
 
-    // @todo Remove manual flow loading
-    // const n1 = await components[0].createNode({num: 1});
-    // const n2 = await components[0].createNode({num: 2});
-    // const n3 = await components[0].createNode({num: 3});
-    //
-    // const add1 = await components[1].createNode();
-    // const add2 = await components[1].createNode();
-    //
-    // n1.position = [0, 0];
-    // n2.position = [0, 200];
-    // n3.position = [0, 350];
-    // add1.position = [300, 100];
-    // add2.position = [600, 200];
-    //
-    // editor.addNode(n1);
-    // editor.addNode(n2);
-    // editor.addNode(n3);
-    // editor.addNode(add1);
-    // editor.addNode(add2);
-    //
-    // editor.connect(n1.outputs.get('num'), add1.inputs.get('num1'));
-    // editor.connect(n2.outputs.get('num'), add1.inputs.get('num2'));
-    // editor.connect(add1.outputs.get('num'), add2.inputs.get('num1'));
-    // editor.connect(n3.outputs.get('num'), add2.inputs.get('num2'));
-
     editor.fromJSON(reteFlowSpec).then(() => {
         editor.view.resize();
         AreaPlugin.zoomAt(editor);
     });
 }
-
-window.loadFlow = loadFlow;
